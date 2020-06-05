@@ -10,7 +10,9 @@
 
 var mic;		// an object for the microphone input
 var fft;		// an object for the FFT frequency analyzer
+var audioStarted = false;
 // a list of standard pitches:
+
 
 var pitches = {
 	NOTE_B0: 31,
@@ -106,6 +108,55 @@ var pitches = {
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
+}
+
+function draw() {
+	background(0);
+	if (!audioStarted) {
+		fill('0099FF');
+		text("click mouse to start audio", 10, height / 2);
+	} else {
+		// get the mic level
+		micLevel = mic.getLevel();
+		// analyze the sound using FFT:
+		var spectrum = fft.analyze();
+		// variable to find the loudest pitch:
+		var loudestPitch = 0;
+		// variable for tne note name of the loudest pitch:
+		var note = '';
+		// loop over the pitches array:
+		for (var thisPitch in pitches) {
+			// get the sound energy at the pitch of each element in the array:
+			var amplitude = fft.getEnergy(pitches[thisPitch]);
+			// if the sound energy is the loudest so far,
+			// save this as the current loudest:
+			if (amplitude > loudestPitch) {
+				loudestPitch = amplitude;
+				note = thisPitch;
+			}
+		}
+		// print out the loudest note:
+		text(note, 20, 20);
+
+		// draw the sound waveform:
+		var waveform = fft.waveform();
+		noFill();
+		beginShape();
+		stroke('#0099FF'); // waveform is teal
+		strokeWeight(1);
+		for (var i = 0; i < waveform.length; i++) {
+			var x = map(i, 0, waveform.length, 0, width);
+			var y = map(waveform[i], -1, 1, 0, height);
+			vertex(x, y);
+		}
+		endShape();
+	}
+}
+
+function mouseReleased() {
+	startAudio();
+}
+function startAudio() {
 	// make a microphone object:
 	mic = new p5.AudioIn()
 	// make an FFT sound analyzer:
@@ -114,42 +165,5 @@ function setup() {
 	mic.start();
 	// set the mic as the input to the analyzer:
 	fft.setInput(mic);
-}
-
-function draw() {
-	background(0);
-	// get the mic level
-	micLevel = mic.getLevel();
-	// analyze the sound using FFT:
-	var spectrum = fft.analyze();
-	// variable to find the loudest pitch:
-	var loudestPitch = 0;
-	// variable for tne note name of the loudest pitch:
-	var note = '';
-	// loop over the pitches array:
-	for (var thisPitch in pitches) {
-		// get the sound energy at the pitch of each element in the array:
-		var amplitude = fft.getEnergy(pitches[thisPitch]);
-		// if the sound energy is the loudest so far,
-		// save this as the current loudest:
-		if (amplitude > loudestPitch) {
-			loudestPitch = amplitude;
-			note = thisPitch;
-		}
-	}
-	// prunt out the loudest note:
-	text(note, 20, 20);
-
-	// draw the sound waveform:
-	var waveform = fft.waveform();
-	noFill();
-	beginShape();
-	stroke('#0099FF'); // waveform is teal
-	strokeWeight(1);
-	for (var i = 0; i < waveform.length; i++) {
-		var x = map(i, 0, waveform.length, 0, width);
-		var y = map(waveform[i], -1, 1, 0, height);
-		vertex(x, y);
-	}
-	endShape();
+	audioStarted = true;
 }
