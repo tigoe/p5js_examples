@@ -6,6 +6,7 @@
   JSON objects in the serial port
 
   created 31 Mar 2019
+  updated 10 April 2020
   by Tom Igoe
   from examples by Sandeep Mistry
 */
@@ -18,133 +19,48 @@ void setup() {
 
 void loop() {
   // wait for serial input:
+  /*
+    What we're waiting for:
+    unknown JSON string
+    {"bri":234, "ct":5343, "on": true}
+    {"name":"Apollo", "age": 3, "tagged": true, "new":false}
+  */
+
   while (Serial.available()) {
     // read until newline"
     String incoming = Serial.readStringUntil('\n');
 
     // parse the string into a JSONVar object:
-    JSONVar myObject = JSON.parse(incoming);
+    JSONVar jsonOjbect = JSON.parse(incoming);
 
-    // myObject.keys() can be used to get an array
+    // jsonOjbect.keys() can be used to get an array
     // of all the keys in the object
-    JSONVar keys = myObject.keys();
+    JSONVar jsonKeys = jsonOjbect.keys();
 
     // read over the object, one key at a time:
-    for (int i = 0; i < keys.length(); i++) {
-      JSONVar value = myObject[keys[i]];
+    for (int i = 0; i < jsonKeys.length(); i++) {
+      JSONVar thisValue = jsonOjbect[jsonKeys[i]];
+      Serial.print("Item number : ");
+      Serial.println(i);
+      // print the key and the value:
+      Serial.print(jsonKeys[i]);
+      Serial.print(" : ");
+      Serial.println(thisValue);
 
-      // print the results back to the serial sender:
-      Serial.print("JSON.typeof(myObject[");
-      Serial.print(keys[i]);
-      Serial.print("]) = ");
-      Serial.println(JSON.typeof(value));
+      // print the data type:
+      Serial.print("Data type : ");
+      Serial.println(JSON.typeof(thisValue));
 
-      Serial.print("myObject[");
-      Serial.print(keys[i]);
-      Serial.print("] = ");
-      Serial.println(value);
-
+      // here's how you can get the data type and convert
+      // to another variable:
+      if (JSON.typeof(thisValue) == "number") {
+        int copiedValue = (int)thisValue;
+        // do an arbitrary operation on it that's specific
+        // to the data type, just to show it works:
+        Serial.print("It's a number and its square is: ");
+        Serial.println(copiedValue * copiedValue);
+      }
       Serial.println();
     }
   }
 }
-
-//
-//void demoParse() {
-//  Serial.println("parse");
-//  Serial.println("=====");
-//
-//  JSONVar myObject = JSON.parse(input);
-//
-//  // JSON.typeof(jsonVar) can be used to get the type of the var
-//  if (JSON.typeof(myObject) == "undefined") {
-//    Serial.println("Parsing input failed!");
-//    return;
-//  }
-//
-//  Serial.print("JSON.typeof(myObject) = ");
-//  Serial.println(JSON.typeof(myObject)); // prints: object
-//
-//  // myObject.hasOwnProperty(key) checks if the object contains an entry for key
-//  if (myObject.hasOwnProperty("result")) {
-//    Serial.print("myObject[\"result\"] = ");
-//
-//    Serial.println((bool) myObject["result"]);
-//  }
-//
-//  if (myObject.hasOwnProperty("count")) {
-//    Serial.print("myObject[\"count\"] = ");
-//
-//    Serial.println((int) myObject["count"]);
-//  }
-//
-//  if (myObject.hasOwnProperty("count")) {
-//    Serial.print("myObject[\"count\"] = ");
-//
-//    Serial.println((double) myObject["count"]);
-//  }
-//
-//  if (myObject.hasOwnProperty("foo")) {
-//    Serial.print("myObject[\"foo\"] = ");
-//
-//    Serial.println((const char*) myObject["foo"]);
-//  }
-//
-//  // JSON vars can be printed using print or println
-//  Serial.print("myObject = ");
-//  Serial.println(myObject);
-//
-//  Serial.println();
-//}
-//
-//void demoCreation() {
-//  Serial.println("creation");
-//  Serial.println("========");
-//
-//  JSONVar myObject;
-//
-//  myObject["hello"] = "world";
-//  myObject["true"] = true;
-//  myObject["x"] = 42;
-//
-//  Serial.print("myObject.keys() = ");
-//  Serial.println(myObject.keys());
-//
-//  // JSON.stringify(myVar) can be used to convert the json var to a String
-//  String jsonString = JSON.stringify(myObject);
-//
-//  Serial.print("JSON.stringify(myObject) = ");
-//  Serial.println(jsonString);
-//
-//  Serial.println();
-//
-//  // myObject.keys() can be used to get an array of all the keys in the object
-//  JSONVar keys = myObject.keys();
-//
-//  for (int i = 0; i < keys.length(); i++) {
-//    JSONVar value = myObject[keys[i]];
-//
-//    Serial.print("JSON.typeof(myObject[");
-//    Serial.print(keys[i]);
-//    Serial.print("]) = ");
-//    Serial.println(JSON.typeof(value));
-//
-//    Serial.print("myObject[");
-//    Serial.print(keys[i]);
-//    Serial.print("] = ");
-//    Serial.println(value);
-//
-//    Serial.println();
-//  }
-//
-//  Serial.println();
-//
-//  // setting a value to undefined can remove it from the object
-//  myObject["x"] = undefined;
-//
-//  // you can also change a value
-//  myObject["hello"] = "there!";
-//
-//  Serial.print("myObject = ");
-//  Serial.println(myObject);
-//}
