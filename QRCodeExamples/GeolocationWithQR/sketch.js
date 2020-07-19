@@ -33,7 +33,7 @@ function draw() {
    background(255);
    fill(0);
    //  display geolocation:
-   text( geolocation, 10, 150);
+   text(geolocation, 10, 150);
 
    // display the URL:
    text(inputString, 10, 120);
