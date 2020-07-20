@@ -49,11 +49,13 @@ function setup() {
   // create an image from it:
   let qrImg = qr.createImgTag(2, 8, "qr code");
   // put the image and the URL string into the HTML div:
-  tagDiv.html(qrImg + '<br>' + urlString);
+  tagDiv.html(urlString + '<br>' + qrImg);
+  // set a callback function for clicking on the tag:
+  tagDiv.mousePressed(hideTag);
 }
 
 function draw() {
-// BLE doesn't use the draw loop
+  // BLE doesn't use the draw loop
 }
 
 function connectToBle() {
@@ -73,8 +75,13 @@ function gotCharacteristics(error, characteristics) {
 // This function will be called when you have a value
 // from a BLE characteristic:
 function gotValue(error, value) {
-  if (error)  bleDiv.html('error: ', error);
+  if (error) bleDiv.html('error: ', error);
   bleDiv.html('BLE characteristic value: ' + value);
   // After getting a value, call p5ble.read() again to get the value again
   myBLE.read(myCharacteristic, gotValue);
+}
+
+// This function hides the tag div when you click on it:
+function hideTag() {
+  tagDiv.hide();
 }
