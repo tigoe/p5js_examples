@@ -16,12 +16,16 @@
 let urlString = parent.location.href;
 // an HTML div to display it in:
 let tagDiv;
+let readingDiv;
 
 function setup() {
    createCanvas(windowWidth, windowHeight);
    // make the HTML tag div:
    tagDiv = createDiv();
-   tagDiv.style('font-size', '18px');
+   tagDiv.style('font-size', '24px');
+   readingDiv = createDiv();
+   readingDiv.position(10,200);
+   readingDiv.style('font-size', '24px');
    // make the QR code:
    let typeNumber = 0;  // 1 - 40
    let errorCorrection = 'L'; // L, M, Q, H
@@ -29,7 +33,7 @@ function setup() {
    qr.addData(urlString);
    qr.make();
    // create an image from it:
-   let cellSize = 2;
+   let cellSize = 4;
    let margin = 8;
    let qrImg = qr.createImgTag(cellSize, margin, "qr code");
    // put the image and the URL string into the HTML div:
@@ -54,9 +58,6 @@ function draw() {
       + rotationY + ", z: "
       + rotationZ;
    //  display all three:
-   let readingDiv = createDiv();
-   readingDiv.position(10,200);
-   readingDiv.style('font-size', '18px');
    let readings = 'Orientation: ' + deviceOrientation + '<br>';
    readings += rotation + '<br>';
    readings += acceleration;
