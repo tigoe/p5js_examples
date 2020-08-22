@@ -21,12 +21,17 @@ function setup() {
    createCanvas(windowWidth, windowHeight);
    // make the HTML tag div:
    tagDiv = createDiv();
+   myDiv.style('font-size', '18px');
    // make the QR code:
-   let qr = qrcode(0, 'L');
+   let typeNumber = 0;  // 1 - 40
+   let errorCorrection = 'L'; // L, M, Q, H
+   let qr = qrcode(typeNumber, errorCorrection);
    qr.addData(urlString);
    qr.make();
    // create an image from it:
-   let qrImg = qr.createImgTag(2, 8, "qr code");
+   let cellSize = 2;
+   let margin = 8;
+   let qrImg = qr.createImgTag(cellSize, margin, "qr code");
    // put the image and the URL string into the HTML div:
    tagDiv.html(urlString + '<br>' + qrImg);
    // position it:
