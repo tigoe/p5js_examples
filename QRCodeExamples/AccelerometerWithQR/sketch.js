@@ -54,9 +54,13 @@ function draw() {
       + rotationY + ", z: "
       + rotationZ;
    //  display all three:
-   text('Orientation: ' + deviceOrientation, 10, 150);
-   text(acceleration, 10, 180);
-   text(rotation, 10, 210);
+   let readingDiv = createDiv();
+   readingDiv.position(10,200);
+   readingDiv.style('font-size', '18px');
+   let readings = 'Orientation: ' + deviceOrientation + '<br>';
+   readings += rotation + '<br>';
+   readings += acceleration;
+   readingDiv.html(readings);
 }
 
 // This function hides the tag div when you click on it:
