@@ -4,18 +4,18 @@ This is a collection of examples for [p5.js](https://p5js.org/), a variation of 
 
 p5.serialport Examples
 
-Pong
+## [Pong](pong/index.html)
 
-WebSocket Client
+## [WebSocket Client](wsClient.js/index.html)
 
 ## QR Code examples
 
 * [Accelerometer](QRCodeExamples/AccelerometerWithQR/index.html)
 * [Geolocation](QRCodeExamples/GeolocationWithQR/index.html)
 * [p5.BLEwithQR](QRCodeExamples/p5BLEWithQR/index.html)
-* QRCodeGenerator
+* [QRCodeGenerator](QRCodeExamples/QRCodeGenerator/index.html)
 
-Tone Detection
+## Tone Detection
 
 Music Examples
 * Player
