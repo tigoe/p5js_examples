@@ -24,10 +24,8 @@ function setup() {
    // make the HTML tag div:
    tagDiv = createDiv();
    // sized for mobile devices:
-   tagDiv.style('font-size', '30px');
    readingDiv = createDiv();
-   readingDiv.position(10,200);
-   readingDiv.style('font-size', '30px');
+   readingDiv.position(10,250);
    // make the QR code:
    let typeNumber = 0;  // 1 - 40
    let errorCorrection = 'L'; // L, M, Q, H
