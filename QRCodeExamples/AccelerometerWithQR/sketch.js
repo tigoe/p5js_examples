@@ -16,16 +16,18 @@
 let urlString = parent.location.href;
 // an HTML div to display it in:
 let tagDiv;
+// div for the sensor readings:
 let readingDiv;
 
 function setup() {
    createCanvas(windowWidth, windowHeight);
    // make the HTML tag div:
    tagDiv = createDiv();
-   tagDiv.style('font-size', '24px');
+   // sized for mobile devices:
+   tagDiv.style('font-size', '30px');
    readingDiv = createDiv();
    readingDiv.position(10,200);
-   readingDiv.style('font-size', '24px');
+   readingDiv.style('font-size', '30px');
    // make the QR code:
    let typeNumber = 0;  // 1 - 40
    let errorCorrection = 'L'; // L, M, Q, H
