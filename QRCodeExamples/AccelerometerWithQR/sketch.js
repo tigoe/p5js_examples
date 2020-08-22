@@ -21,7 +21,7 @@ function setup() {
    createCanvas(windowWidth, windowHeight);
    // make the HTML tag div:
    tagDiv = createDiv();
-   myDiv.style('font-size', '18px');
+   tagDiv.style('font-size', '18px');
    // make the QR code:
    let typeNumber = 0;  // 1 - 40
    let errorCorrection = 'L'; // L, M, Q, H
