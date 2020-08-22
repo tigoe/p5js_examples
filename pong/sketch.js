@@ -29,8 +29,8 @@ const PADDLE_MOVE_DISTANCE = 20;  // minimum move of each paddle
 let playerList;
 // make the ball:
 let ball = {
-  size: 10,       // ball size
-  direction: {    // direction, X and Y increments
+  size: 10,    // ball size
+  direction: { // direction, X and Y increments
     h: 2,
     v: 2
   },              // position
