@@ -1,5 +1,5 @@
 /*
-  8x8 LED matrix pong
+  8x8 matrix pong
  for p5.js
  
  This example draws a pong game.  Left paddle is controlled by 'a' and 'z'.
@@ -37,7 +37,7 @@ var interval = 120; // interval between ball moves, in milliseconds
 var gamePaused = false; // state of the game
 
 function setup() {
-  // initialize the I/O pins as outputs:
+  // create the canvas:
   createCanvas(420, 220);
   smooth();
   frameRate(30);
